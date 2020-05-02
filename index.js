@@ -28,14 +28,29 @@ client.on('message', async msg => {
         em.setColor('RED');
         em.setTitle('Your file has been decompressed!');
         let at = new Discord.MessageAttachment(data, a.name);
-        em.attachFiles([ at ]);
+        em.attachFiles([at]);
         await m.channel.send(em)
     }
     if (msg.content === '!info') {
         msg.reply('The <@706058387942539285> is a bot which can decompress CSV files');
     }
     if (msg.content === '!help') {
-        msg.reply('The <@706058387942539285> is a bot which can decompress CSV files');
+        const embed = {
+            "color": 1145312,
+            "fields": [
+                {
+                    "name": "**More info**",
+                    "value": "`!info`",
+                    "inline": true
+                },
+                {
+                    "name": "**Decode CSV (attached)**",
+                    "value": "`!csvdecode`",
+                    "inline": true
+                }
+            ]
+        };
+        msg.reply(new Discord.MessageEmbed(embed));
     }
 });
 
