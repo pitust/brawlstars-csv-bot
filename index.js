@@ -85,7 +85,7 @@ client.on('message', async msg => {
             for (let c of chanswm) {
                 t++;
                 try {
-                    //await client.channels.cache.get(c).send('The bot is shutting down for maintanance. This will only take a second or two.');
+                    await client.channels.cache.get(c).send('The bot is shutting down for maintanance. This will only take a second or two.');
                     f++;
                 } catch (_e) { }
             }
