@@ -11,7 +11,8 @@ client.on('ready', () => {
             type: 'LISTENING',
             name: 'commands from brawl stars modders'
         }
-    }).then(console.log)
+    }).then(console.log);
+
 });
 let sigID = [
     'NONE',
@@ -81,15 +82,6 @@ client.on('message', async msg => {
                 chans: chanswm,
                 stats
             }));
-            let t = 0, f = 0;
-            for (let c of chanswm) {
-                t++;
-                try {
-                    await client.channels.cache.get(c).send('The bot is shutting down for maintanance. This will only take a second or two.');
-                    f++;
-                } catch (_e) { }
-            }
-            await msg.reply(`Sent to ${t} channels, OK in ${f} channels, ${Math.floor(f / t * 100)}%`);
             process.exit(0);
         }
         if (msg.content.startsWith('!csvencode')) {
@@ -129,6 +121,16 @@ client.on('message', async msg => {
         if (msg.content === '!info') {
             msg.reply('The <@706058387942539285> is a bot which can decompress CSV files');
         }
+        if (msg.content === '!ping') {
+            msg.createdTimestamp
+            const m = await msg.channel.send("Pinging...");
+            await m.delete();
+            let emb = new Discord.MessageEmbed();
+            emb.setTitle('Pong!');
+            emb.addField('Latency', `${m.createdTimestamp - msg.createdTimestamp}ms`);
+            emb.setColor('BLUE');
+            msg.channel.send(emb);
+        }
         if (msg.content === '!help') {
             const embed = {
                 "color": 1145312,
@@ -156,5 +158,5 @@ client.on('message', async msg => {
         await msg.reply('Error (DM <@696410219663851552> with the error)\n' + e.stack);
     }
 });
-
+setTimeout(() => { }, 1000)
 client.login(require('fs').readFileSync('.secret').toString());
