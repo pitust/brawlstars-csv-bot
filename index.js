@@ -2,7 +2,6 @@ const ScCompression = require('sc-compression');
 const Discord = require('discord.js');
 const fetch = require('node-fetch');
 const client = new Discord.Client();
-
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setPresence({
@@ -127,7 +126,9 @@ client.on('message', async msg => {
             await m.delete();
             let emb = new Discord.MessageEmbed();
             emb.setTitle('Pong!');
-            emb.addField('Latency', `${m.createdTimestamp - msg.createdTimestamp}ms`);
+            emb.addField('Response time', `${m.createdTimestamp - msg.createdTimestamp}ms`, true);
+            emb.addField('API Ping', `${client.ws.ping}ms`, true);
+            emb.addField('ICMP Ping', `${require('child_process').execSync(`ping discordapp.com -nc 1 | grep time | head -n 1 | grep -Po 'time=[0-9\.]+' | grep -Po '[0-9\.]+' | cat`).toString().trim()}ms`, true);
             emb.setColor('BLUE');
             msg.channel.send(emb);
         }
@@ -159,4 +160,4 @@ client.on('message', async msg => {
     }
 });
 setTimeout(() => { }, 1000)
-client.login(require('fs').readFileSync('.secret').toString());
+client.login(require('fs').readFileSync('.secret').toString().trim());
